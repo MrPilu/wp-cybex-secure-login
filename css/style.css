@@ -1,0 +1,106 @@
+/*
+* styles for settings page
+*/
+#cbxsec_settings,
+#cbxsec_blocked,
+#cbxsec_denylist,
+#cbxsec_allowlist,
+#cbxsec_log,
+#cbxsec_statistics {
+  padding-top: 15px;
+}
+#cbxsec_blocked + .cbx-plugin-reviews,
+#cbxsec_denylist + .cbx-plugin-reviews,
+#cbxsec_allowlist + .cbx-plugin-reviews,
+#cbxsec_log + .cbx-plugin-reviews,
+#cbxsec_statistics + .cbx-plugin-reviews {
+  margin-top: 25px;
+}
+.cbxsec_hidden {
+  display: none !important;
+}
+.cbxsec_settings label {
+  padding-bottom: 15px;
+}
+#cbxsec-time-to-reset,
+#cbxsec-time-to-reset-display,
+#cbxsec-time-to-reset-block,
+#cbxsec-time-to-reset-block-display {
+  display: inline-block;
+}
+tr.cbxsec_allowlist,
+.striped > tbody tr.cbxsec_allowlist {
+  background-color: #cffed6;
+}
+tr.cbxsec_denylist,
+.striped > tbody tr.cbxsec_denylist {
+  background-color: #ffd7d7;
+}
+tr.cbxsec_blocked,
+.striped > tbody tr.cbxsec_blocked {
+  background-color: #fffcdc;
+}
+.cbxsec_options_table input,
+.cbxsec_options_table_demo input {
+  text-align: right;
+}
+.cbxsec-unit-measure {
+  margin-left: 2px;
+  font-weight: 900;
+}
+.cbxsec-edit {
+  cursor: pointer;
+  color: #0074a2;
+  margin-left: 5px;
+}
+.cbxsec_options_table input[type="number"],
+.cbxsec_options_table_demo input[type="number"] {
+  width: 5em;
+}
+.cbxsec_edit_list_form table {
+  padding: 5px 5px 5px 5px;
+}
+.cbxsec_attempts {
+  width: 100%;
+}
+.cbxsec_email_notifications_input {
+  max-width: 158px;
+}
+@media only screen and (max-width: 785px) {
+  .cbxsec_list p.search-box {
+    position: relative;
+  }
+  select[name="cbxsec_user_email_address"],
+  input[name="cbxsec_email_address"] {
+    margin-top: 5px;
+  }
+  .cbxsec_edit_list_form input[type="checkbox"] {
+    margin: 5px 2px 5px 0;
+  }
+}
+@media only screen and (max-width: 450px) {
+  .cbxsec_edit_list_form,
+  .cbxsec_edit_list_form table,
+  .cbxsec_edit_list_form tbody,
+  .cbxsec_edit_list_form tr,
+  .cbxsec_edit_list_form td {
+    display: block;
+    width: inherit;
+    box-sizing: border-box;
+  }
+  .cbxsec_edit_list_form table {
+    padding-right: 5px;
+  }
+  .cbxsec_edit_list_form .subsubsub {
+    display: inline-block;
+    float: none;
+  }
+  .cbxsec_edit_list_form .subsubsub li {
+    float: left;
+  }
+  .cbxsec_list .tablenav.bottom .displaying-num {
+    display: block;
+    position: static;
+    margin-bottom: 10px;
+  }
+}

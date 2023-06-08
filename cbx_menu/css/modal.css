@@ -1,0 +1,127 @@
+.cbx-modal {
+    position: fixed;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 100000;
+    display: none;
+    background: rgba(0, 0, 0, 0.6);
+}
+.cbx-modal.active {
+    display: block;
+}
+.cbx-modal.active:before {
+    display: block;
+}
+.cbx-modal .cbx-modal-dialog {
+    background: transparent;
+    position: absolute;
+    left: 50%;
+    margin-left: -298px;
+    padding-bottom: 30px;
+    top: -100%;
+    z-index: 100001;
+    width: 596px;
+}
+.cbx-modal.active .cbx-modal-dialog {
+    top: 10%;
+}
+.cbx-modal .cbx-modal-body,
+.cbx-modal .cbx-modal-footer {
+    border: 0;
+    background: #fff;
+    padding: 25px 25px 15px;
+}
+.cbx-modal .cbx-modal-body {
+    border-bottom: 0;
+}
+.cbx-modal .cbx-modal-body p {
+    font-size: 1.3em;
+}
+.cbx-modal .cbx-modal-body h2 {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-top: 0;
+}
+.cbx-modal .cbx-modal-footer {
+    border-top: #eeeeee solid 1px;
+}
+.cbx-modal .cbx-modal-footer .cbx-modal-skip-link {
+    text-decoration: none;
+    float: right;
+    display: inline-block;
+    padding: 7px;
+}
+.cbx-modal .cbx-modal-footer .button {
+    margin: 0 7px;    
+    float: left;
+}
+.rtl .cbx-modal .cbx-modal-footer .cbx-modal-skip-link {
+    float: left;
+}
+.rtl .cbx-modal .cbx-modal-footer .button {
+    float: right;
+}
+.cbx-modal .cbx-modal-footer .button:first-child {
+    margin: 0;
+}
+.cbx-modal .cbx-modal-panel>.notice.inline {
+    margin: 0;
+    display: none;
+}
+.cbx-modal .cbx-modal-panel:not(.active) {
+    display: none;
+}
+body.has-cbx-modal {
+    overflow: hidden;
+}
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-reason-input,
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-internal-message {
+    margin: 3px 0 3px 22px;
+}
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-reason-input input,
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-reason-input textarea,
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-internal-message input,
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-internal-message textarea,
+.cbx-modal.cbx-modal-request-feature textarea {
+    width: 100%;
+}
+.cbx-modal.cbx-modal-deactivation-feedback li.cbx-modal-reason.has-internal-message .cbx-modal-internal-message {
+    border: 1px solid #ccc;
+    padding: 7px;
+    display: none;
+}
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-anonymous-label {
+    padding-top: 15px;
+}
+.cbx-modal.cbx-modal-deactivation-feedback .cbx-modal-panel {
+    margin-top: 0 !important;
+}
+
+@media (max-width: 650px) {
+    .cbx-modal .cbx-modal-dialog {
+        margin-left: -50%;
+        box-sizing: border-box;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 100%;
+    }
+    .cbx-modal .cbx-modal-dialog .cbx-modal-panel>h3>strong {
+        font-size: 1.3em;
+    }
+    .cbx-modal.cbx-modal-deactivation-feedback li.cbx-modal-reason li.cbx-modal-reason {
+        margin-bottom: 10px;
+    }
+    .cbx-modal.cbx-modal-deactivation-feedback li.cbx-modal-reason li.cbx-modal-reason .cbx-modal-reason-input,
+    .cbx-modal.cbx-modal-deactivation-feedback li.cbx-modal-reason li.cbx-modal-reason .cbx-modal-internal-message {
+        margin-left: 29px;
+    }
+    .cbx-modal.cbx-modal-deactivation-feedback li.cbx-modal-reason li.cbx-modal-reason label {
+        display: table;
+    }
+    .cbx-modal.cbx-modal-deactivation-feedback li.cbx-modal-reason li.cbx-modal-reason label>span {
+        display: table-cell;
+        font-size: 1.3em;
+    }
+}
