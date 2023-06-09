@@ -1,4 +1,0 @@
-<?php
-/*
-* CybexSecurity product list
-*/

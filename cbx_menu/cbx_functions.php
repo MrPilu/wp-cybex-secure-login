@@ -3,13 +3,11 @@
 * General functions for CybexSecurity plugins
 */
 
-require( dirname( __FILE__ ) . '/deprecated.php' );
-require_once( dirname( __FILE__ ) . '/deactivation-form.php' );
 
 /**
  * Function to add 'xcellorate' slug for cbx_Menu MO file if cbx_Menu loaded from theme.
  *
- * @since 1.9.7
+ * @since 1.0.0
  */
 if ( ! function_exists ( 'cbx_get_mofile' ) ) {
 	function cbx_get_mofile( $mofile, $domain ) {
@@ -34,7 +32,7 @@ if ( isset( $cbx_menu_source ) && 'themes' == $cbx_menu_source ) {
 /**
  * Function to getting url to current cbx_Menu.
  *
- * @since 1.9.7
+ * @since 1.0.0
  */
 if ( ! function_exists ( 'cbx_menu_url' ) ) {
 	if ( ! isset( $cbx_menu_source ) || 'plugins' == $cbx_menu_source ) {
@@ -92,7 +90,6 @@ if ( ! function_exists( 'cbx_admin_notices' ) ) {
 		/* cbx_plugin_banner_go_pro */
 		if ( ! empty( $cbx_plugin_banner_go_pro ) ) {
 			/* get $cbx_plugins */
-			// require( dirname( __FILE__ ) . '/product_list.php' );
 			
 			foreach ( $bstwbsftwppdtplgns_banner_array as $value ) {
 				if ( isset( $cbx_plugin_banner_go_pro[ $value[0] ] ) && ! isset( $_COOKIE[ $value[0] ] ) ) {
@@ -209,34 +206,6 @@ if ( ! function_exists( 'cbx_admin_notices' ) ) {
 					</form>
 				</div>
 			<?php }
-		}
-
-		/**
-		 * show notices about deprecated_function
-		 * @since 1.9.8
-		*/
-		if ( ! empty( $bstwbsftwppdtplgns_options['deprecated_function'] ) ) { ?>
-			<div class="update-nag">
-				<strong><?php _e( 'Deprecated function(-s) is used on the site here:', 'xcellorate' ); ?></strong>
-				<?php $i = 1;
-				foreach ( $bstwbsftwppdtplgns_options['deprecated_function'] as $function_name => $attr ) {
-					if ( 1 != $i )
-						echo ' ,';
-					if ( ! empty( $attr['product-name'] ) ) {
-						echo $attr['product-name'];
-					} elseif ( ! empty( $attr['file'] ) ) {
-						echo $attr['file'];
-					}
-					unset( $bstwbsftwppdtplgns_options['deprecated_function'][ $function_name ] );
-					$i++;
-				} ?>.
-				<br/>
-				<?php _e( 'This function(-s) will be removed over time. Please update the product(-s).', 'xcellorate' ); ?>
-			</div>
-			<?php if ( is_multisite() )
-				update_site_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options );
-			else
-				update_option( 'bstwbsftwppdtplgns_options', $bstwbsftwppdtplgns_options );
 		}
 	}
 }
@@ -419,18 +388,6 @@ if ( ! function_exists ( 'cbx_plugins_admin_init' ) ) {
 				unset( $recent[ $plugin ] );
 				update_site_option( 'recently_activated', $recent );
 			}
-			/**
-			* @deprecated 1.9.8 (15.12.2016)
-			*/
-			$is_main_page = in_array( $_GET['page'], array( 'cbx_panel', 'cbx_themes', 'cbx_system_status' ) );
-			$page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
-			$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : '';
-
-			if ( $is_main_page )
-				$current_page = 'admin.php?page=' . $page;
-			else
-				$current_page = isset( $_GET['tab'] ) ? 'admin.php?page=' . $page . '&tab=' . $tab : 'admin.php?page=' . $page;
-			/*end deprecated */
 
 			wp_redirect( self_admin_url( esc_url( $current_page . '&activate=true' ) ) );
 			exit();
@@ -569,7 +526,7 @@ if ( ! function_exists ( 'cbx_admin_enqueue_scripts' ) ) {
 /**
 * add styles and scripts for cbx_Settings_Tabs
 *
-* @since 1.9.8
+* @since 1.0.0
 */
 if ( ! function_exists( 'cbx_enqueue_settings_scripts' ) ) {
 	function cbx_enqueue_settings_scripts() {
@@ -796,7 +753,7 @@ if ( ! function_exists( 'cbx_shortcode_media_button_popup' ) ) {
 
 /**
  * output shortcode in a special block
- * @since 1.9.8
+ * @since 1.0.0
  */
 if ( ! function_exists( 'cbx_shortcode_output' ) ) {
 	function cbx_shortcode_output( $shortcode ) { ?>
@@ -806,7 +763,7 @@ if ( ! function_exists( 'cbx_shortcode_output' ) ) {
 
 /**
  * output tooltip
- * @since 1.9.8
+ * @since 1.0.0
  * @param   string   $content  - HTML content for the tooltip
  * @param   string   $class  - Can be standart "cbx-hide-for-mobile" (tooltip will be hidden in 782px) and "cbx-auto-width" (need for img) or some custom class.
  */

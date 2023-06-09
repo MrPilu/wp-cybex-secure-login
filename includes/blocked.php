@@ -226,7 +226,7 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List' ) ) {
 				/* Realization bulk action in table with blocked addresses */
 				if ( isset( $_POST['ip'] ) ) {
 					/* array for loop */
-					$ips = $_POST['ip'];
+					$ips = sanitize_text_field($_POST['ip']);
 					foreach ( $ips as $ip ) {
 						$result_reset_block = $wpdb->update(
 							'{$prefix}cbxsec_failed_attempts',
@@ -266,7 +266,7 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List' ) ) {
                 /* Realization bulk action in table with blocked addresses */
                 if ( isset( $_POST['ip'] ) ) {
                     /* array for loop */
-                    $ips = $_POST['ip'];
+                    $ips = sanitize_text_field($_POST['ip']);
                     foreach ( $ips as $ip ) {
                         $ip_int = sprintf( '%u', ip2long( $ip ) );
                         $result_reset_block = $wpdb->update(
@@ -304,7 +304,7 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List' ) ) {
             }
 
 			if ( isset( $_REQUEST['s'] ) ) {
-				$search_request = esc_html( trim( $_REQUEST['s'] ) );
+				$search_request = sanitize_text_field($_REQUEST['s']);
 				if ( ! empty( $search_request ) ) {
 					if ( preg_match( '/^(25[0-5]|2[0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[0-9])?(\.?(25[0-5]|2[0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[-0-9])?){0,3}?$/', $search_request ) ) {
 						$action_message['done'] .= ( empty( $action_message['done'] ) ? '' : '<br/>' ) . __( 'Search results for', 'cybex-security' ) . '&nbsp;' . $search_request;

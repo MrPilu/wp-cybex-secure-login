@@ -371,13 +371,6 @@ if ( ! function_exists( 'register_cbxsec_settings' ) ) {
 
 		if ( ! isset( $cbxsec_options['plugin_db_version'] ) || $cbxsec_options['plugin_db_version'] != $db_version ) {
 
-            /**
-             * @deprecated since 1.2.9
-             * @todo remove after 20.09.2021
-             */
-			$wpdb->query( "ALTER TABLE `{$prefix}failed_attempts` ADD `block_start` DATETIME AFTER `block_quantity`;" );
-            /* end deprecated */
-
             cbxsec_create_table();
 
 			/* crop table 'all_failed_attempts' */
@@ -1449,5 +1442,4 @@ add_action( 'cbxsec_daily_statistics_clear', 'cbxsec_clear_statistics_daily' );
 add_action( 'admin_notices', 'cbxsec_show_notices' );
 /* ajax function */
 add_action( 'wp_ajax_cbxsec_restore_default_message', 'cbxsec_restore_default_message' );
-register_deactivation_hook( __FILE__, 'lmtttmpt_deactivate' );
 

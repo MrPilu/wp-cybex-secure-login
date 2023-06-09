@@ -58,7 +58,7 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List_Email' ) ) {
 
 			/* if search */
 			if ( isset( $_REQUEST['s'] ) ) {
-				$search_email = trim( esc_html( $_REQUEST['s'] ) );
+				$search_email = sanitize_text_field( $_REQUEST['s'] );
 				$and = " AND email LIKE '%{$search_email}%' ";
 			} else {
 				$and = '';
@@ -99,23 +99,30 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List_Email' ) ) {
                     {$and}
             ";
 
-			/* the 'orderby' and 'order' values */
-			$orderby = ( isset( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], array_keys( $this->get_sortable_columns() ) ) ) ? $_REQUEST['orderby'] : 'block_till';
-			$order   = ( isset( $_REQUEST['order'] ) && in_array( $_REQUEST['order'], array( 'asc', 'desc' ) ) ) ? $_REQUEST['order'] : 'asc';
-			/* calculate offset for pagination */
-			$paged   = ( isset( $_REQUEST['paged'] ) && is_numeric( $_REQUEST['paged'] ) && 0 < $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1;
-			$offset  = ( $paged - 1 ) * $perpage;
-			/* add calculated values (order and pagination) to our query */
-			$query .= " ORDER BY {$orderby} {$order} LIMIT {$offset}, {$perpage} ";
-			/* get data from our failed_attempts table - list of blocked Emails */
+			// the 'orderby' and 'order' values
+			$orderby = ( isset( $_REQUEST['orderby'] ) && array_key_exists( $_REQUEST['orderby'], $this->get_sortable_columns() ) ) ? $_REQUEST['orderby'] : 'block_till';
+			$order = ( isset( $_REQUEST['order'] ) && in_array( $_REQUEST['order'], array( 'asc', 'desc' ) ) ) ? $_REQUEST['order'] : 'asc';
+
+			// calculate offset for pagination
+			$paged = ( isset( $_REQUEST['paged'] ) && is_numeric( $_REQUEST['paged'] ) && $_REQUEST['paged'] > 0 ) ? $_REQUEST['paged'] : 1;
+			$offset = ( $paged - 1 ) * $perpage;
+
+			// add calculated values (order and pagination) to our query
+			$query .= $wpdb->prepare( " ORDER BY %s %s LIMIT %d, %d", $orderby, $order, $offset, $perpage );
+
+			// get data from our failed_attempts table - list of blocked Emails
 			$blocked_items = $wpdb->get_results( $query, ARRAY_A );
-			/* get site date and time format from DB option */
+
+			// get site date and time format from DB option
 			$date_time_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+
 			foreach ( $blocked_items as &$blocked_item ) {
-				$blocked_item['email'] = ( $blocked_item['email'] ) ? $blocked_item['email'] : 'N/A';
-				/* process block_till date */
+				$blocked_item['email'] = ( ! empty( $blocked_item['email'] ) ) ? $blocked_item['email'] : 'N/A';
+
+				// process block_till date
 				$blocked_item['block_till'] = date( $date_time_format, strtotime( $blocked_item['block_till'] ) );
 			}
+
 
 			$columns 				= $this->get_columns();
 			$hidden 				= array();

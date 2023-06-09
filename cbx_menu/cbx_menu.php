@@ -1,7 +1,7 @@
 <?php
 /*
 * Function for displaying CybexSecurity menu
-* Version: 0.0.1
+* Version: 1.0.0
 */
 
 if ( ! function_exists ( 'cbx_admin_enqueue_scripts' ) )
@@ -28,7 +28,6 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 				require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 			/* get $cbx_plugins */
-			// require( dirname( __FILE__ ) . '/product_list.php' );
 
 			$all_plugins = get_plugins();
 			$active_plugins = get_option( 'active_plugins' );
@@ -525,7 +524,7 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
                         <div class="clear"></div>
 					<?php }
 				} elseif ( 'cbx_themes' == $page || 'themes' == $tab ) {
-					// require( dirname( __FILE__ ) . '/product_list.php' ); ?>
+					?>
                     <h1><?php _e( 'Themes', 'xcellorate' ); ?></h1>
                     <div id="availablethemes" class="cbx-availablethemes">
                         <div class="theme-browser content-filterable rendered">

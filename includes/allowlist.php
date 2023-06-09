@@ -31,7 +31,7 @@ if ( ! class_exists( 'Cbxlogin_Allowlist' ) ) {
 		function column_ip( $item ) {
 			/* adding action to 'ip' collumn */
 			$actions = array(
-				'delete'	=> '<a href="' . wp_nonce_url( sprintf( '?page=%s&list=allowlist&cbxsec_remove_from_allowlist=%s' ,$_REQUEST['page'], $item['ip'] ) , 'cbxsec_remove_from_allowlist_' . $item['ip'], 'cbxsec_nonce_name' ) . '">' . __( 'Delete', 'cybex-security' ) . '</a>'
+				'delete'	=> '<a href="' . wp_nonce_url( sprintf( '?page=%s&list=allowlist&cbxsec_remove_from_allowlist=%s' ,sanitize_text_field( $_REQUEST['page'] ), $item['ip'] ) , 'cbxsec_remove_from_allowlist_' . $item['ip'], 'cbxsec_nonce_name' ) . '">' . __( 'Delete', 'cybex-security' ) . '</a>'
 			);
 			return sprintf( '%1$s %2$s', $item['ip'], $this->row_actions( $actions ) );
 		}
@@ -74,24 +74,29 @@ if ( ! class_exists( 'Cbxlogin_Allowlist' ) ) {
 				"per_page" 		=> $perpage
 			) );
 
-			$orderby = isset( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], array_keys( $this->get_sortable_columns() ) ) ? $_REQUEST['orderby']  : 'add_time';
-			$order = ( isset( $_REQUEST['order'] ) && in_array( $_REQUEST['order'], array( 'asc', 'desc' ) ) ) ? $_REQUEST['order'] : 'desc';
-			/* calculate offset for pagination */
-			$paged = ( isset( $_REQUEST['paged'] ) && is_numeric( $_REQUEST['paged'] ) && 0 < $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1;
+			$orderby = isset( $_REQUEST['orderby'] ) && in_array( sanitize_text_field( $_REQUEST['orderby'] ), array_keys( $this->get_sortable_columns() ) ) ? sanitize_text_field( $_REQUEST['orderby'] ) : 'add_time';
+			$order = ( isset( $_REQUEST['order'] ) && in_array( sanitize_text_field( $_REQUEST['order'] ), array( 'asc', 'desc' ) ) ) ? sanitize_text_field( $_REQUEST['order'] ) : 'desc';
+			
+			/* Calculate offset for pagination */
+			$paged = ( isset( $_REQUEST['paged'] ) && is_numeric( $_REQUEST['paged'] ) && 0 < sanitize_text_field( $_REQUEST['paged'] ) ) ? sanitize_text_field( $_REQUEST['paged'] ) : 1;
 			$offset = ( $paged - 1 ) * $perpage;
-
-			/* general query */
+			
+			/* General query */
 			$query = "SELECT `ip`, `add_time` FROM `" . $prefix . "allowlist`";
 			if ( isset( $_REQUEST['s'] ) ) {
-			    $query .= " WHERE `ip` LIKE '%" . $part_ip . "%'";
+				$query .= " WHERE `ip` LIKE '%" . $part_ip . "%'";
 			}
-			/* add calculated values (order and pagination) to our query */
-			$date_time_format  = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+			
+			/* Add calculated values (order and pagination) to our query */
+			$date_time_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 			$query .= " ORDER BY `" . $orderby . "` " . $order . " LIMIT " . $offset . "," . $perpage;
+			
 			$whitelisted_items = $wpdb->get_results( $query, ARRAY_A );
+			
 			foreach ( $whitelisted_items as &$whitelisted_item ) {
 				$whitelisted_item['add_time'] = is_null( $whitelisted_item['add_time'] ) ? "" : date( $date_time_format, strtotime( $whitelisted_item['add_time'] ) );
 			}
+			
 			$columns 				= $this->get_columns();
 			$hidden 				= array();
 			$sortable 				= $this->get_sortable_columns();
@@ -123,15 +128,15 @@ if ( ! class_exists( 'Cbxlogin_Allowlist' ) ) {
 			$prefix = "{$wpdb->prefix}cbxsec_";
 
 			if ( isset( $_REQUEST['cbxsec_remove_from_allowlist'] ) ) {
-				check_admin_referer( 'cbxsec_remove_from_allowlist_' . $_REQUEST['cbxsec_remove_from_allowlist'], 'cbxsec_nonce_name' );
-				$ip_list = $_REQUEST['cbxsec_remove_from_allowlist'];
+				check_admin_referer( 'cbxsec_remove_from_allowlist_' . sanitize_text_field($_REQUEST['cbxsec_remove_from_allowlist']), 'cbxsec_nonce_name' );
+				$ip_list = sanitize_text_field($_REQUEST['cbxsec_remove_from_allowlist']);
 			} else {
 				if(
 					( isset( $_POST['action'] )  && $_POST['action']  == 'remove_from_allowlist_ips' ) ||
 					( isset( $_POST['action2'] ) && $_POST['action2'] == 'remove_from_allowlist_ips' )
 				) {
 					check_admin_referer( 'bulk-' . $this->_args['plural'] );
-					$ip_list = isset( $_POST['ip'] ) ? $_POST['ip'] : '';
+					$ip_list = isset( $_POST['ip'] ) ? sanitize_text_field($_POST['ip']) : '';
 				}
 			}
 			if ( isset( $ip_list ) ) {

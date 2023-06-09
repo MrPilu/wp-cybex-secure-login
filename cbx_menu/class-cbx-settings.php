@@ -2,7 +2,7 @@
 /**
  * Displays the content on the plugin settings page
  * @package CybexSecurity
- * @since 1.9.8
+ * @since 1.0.0
  */
 
 if ( ! class_exists( 'cbx_Settings_Tabs' ) ) {
@@ -98,7 +98,6 @@ if ( ! class_exists( 'cbx_Settings_Tabs' ) ) {
 
 			$this->pro_page = $this->cbx_license_plugin = '';
 			/* get $cbx_plugins */
-			// require( dirname( __FILE__ ) . '/product_list.php' );
 			if ( isset( $cbx_plugins[ $this->plugin_basename ] ) ) {
 				if ( isset( $cbx_plugins[ $this->plugin_basename ]['pro_settings'] ) ) {
 					$this->pro_page  			= $cbx_plugins[ $this->plugin_basename ]['pro_settings'];
