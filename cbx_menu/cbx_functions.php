@@ -410,7 +410,6 @@ if ( ! function_exists ( 'cbx_admin_enqueue_scripts' ) ) {
 			$cbx_shortcode_list;
 
 		$jquery_ui_version = isset( $wp_scripts->registered['jquery-ui-core']->ver ) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.12.1';
-		wp_enqueue_style( 'jquery-ui-style', cbx_menu_url( 'css/jquery-ui-styles/' . $jquery_ui_version . '/jquery-ui.css' ) );
 		wp_enqueue_style( 'cbx-admin-css', cbx_menu_url( 'css/general_style.css' ) );
 		wp_enqueue_script( 'cbx-admin-scripts', cbx_menu_url( 'js/general_script.js' ), array( 'jquery', 'jquery-ui-tooltip' ) );
 
