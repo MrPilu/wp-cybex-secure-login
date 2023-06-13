@@ -265,7 +265,7 @@ if ( ! function_exists( 'cbxsec_display_statistics' ) ) {
 				</form>
 			</div>
 		<?php } else {
-			cbxsec_display_advertising( 'summaries' ); ?>
+			?>
 			<div id="cbxsec_statistics" class="cbxsec_list">
 				<?php 
 				$cbxsec_statistics_list = new Cbxlogin_Statistics();

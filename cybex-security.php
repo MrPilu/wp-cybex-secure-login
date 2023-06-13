@@ -606,7 +606,6 @@ if ( ! function_exists( 'cbxsec_create_new_item' ) ) {
 		global $wpdb, $cbxsec_options;
 
 		$cbxsec_table = $cbxsec_type_new_item = '';
-		require_once( dirname( __FILE__ ) . '/includes/pro-tab.php' );
 		if ( isset( $_REQUEST['type'] ) ) {
 			$cbxsec_table = 'denylist' == sanitize_text_field($_REQUEST['type']) || 'denylist-email' == sanitize_text_field($_REQUEST['type']) ? 'denylist' : 'allowlist';
 			$cbxsec_type_new_item = 'denylist' == sanitize_text_field($_REQUEST['type']) || 'allowlist' == sanitize_text_field($_REQUEST['type']) ? 'ip' : 'email'; 
@@ -753,7 +752,7 @@ if ( ! function_exists( 'cbxsec_settings_page' ) ) {
 				$page->display_content();
 		} else { ?>
 			<div class="wrap">
-			<?php require_once( dirname( __FILE__ ) . '/includes/pro-tab.php' );
+			<?php 
 			if ( 'cybex-security-log.php' == $_GET['page'] ) { ?>	
 				<h1><?php echo sanitize_text_field(  get_admin_page_title() ); ?></h1>
 				<div id="cbxsec_statistics" class="cbxsec_list">
