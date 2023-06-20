@@ -340,9 +340,9 @@ if ( ! class_exists( 'Cbxsec_Settings_Tabs' ) ) {
 					<th><?php _e( 'Reset Failed Attempts After', 'cybex-security' ); ?></th>
 					<td>
 						<fieldset id="cbxsec-time-to-reset-display" class="cbxsec_hidden cbxsec-display">
-							<label <?php if ( 0 == $this->options['days_to_reset'] ) echo 'class="cbxsec-zero-value"'; ?> > <span class="cbxsec-unit-measure" ><?php echo $this->options['days_to_reset']; ?></span> <?php echo _n( 'day', 'days', $this->options['days_to_reset'], 'cybex-security' ); ?></label>
-							<label <?php if ( 0 == $this->options['hours_to_reset'] ) echo 'class="cbxsec-zero-value"'; ?> > <span class="cbxsec-unit-measure" ><?php echo $this->options['hours_to_reset']; ?></span> <?php echo _n( 'hour', 'hours', $this->options['hours_to_reset'], 'cybex-security' ); ?></label>
-							<label <?php if ( 0 == $this->options['minutes_to_reset'] ) echo 'class="cbxsec-zero-value"'; ?> > <span class="cbxsec-unit-measure" ><?php echo $this->options['minutes_to_reset']; ?></span> <?php echo _n( 'minute', 'minutes', $this->options['minutes_to_reset'], 'cybex-security' ); ?></label>
+							<label <?php if ( 0 == $this->options['days_to_reset'] ) echo 'class="cbxsec-zero-value"';  ?>><span class="cbxsec-unit-measure"><?php echo esc_html( $this->options['days_to_reset'] ); ?></span> <?php echo esc_html( _n( 'day', 'days', $this->options['days_to_reset'], 'cybex-security' ) ); ?></label>
+							<label <?php if ( 0 == $this->options['hours_to_reset'] ) echo 'class="cbxsec-zero-value"';  ?>><span class="cbxsec-unit-measure"><?php echo esc_html( $this->options['hours_to_reset'] ); ?></span> <?php echo esc_html( _n( 'hour', 'hours', $this->options['hours_to_reset'], 'cybex-security' ) ); ?></label>
+							<label <?php if ( 0 == $this->options['minutes_to_reset'] ) echo 'class="cbxsec-zero-value"';  ?>><span class="cbxsec-unit-measure"><?php echo esc_html( $this->options['minutes_to_reset'] ); ?></span> <?php echo esc_html( _n( 'minute', 'minutes', $this->options['minutes_to_reset'], 'cybex-security' ) ); ?></label>
 							<label id="cbxsec-time-to-reset-edit" class="cbxsec-edit"><?php _e( 'Edit', 'cybex-security' ); ?></label>
 						</fieldset>
 						<fieldset id="cbxsec-time-to-reset" class="cbxsec-hidden-input">

@@ -339,59 +339,70 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 						<p>
 							<strong><?php _e( 'Get Started', 'xcellorate' ); ?></strong>
 							<br>
-							<a target="_blank" href="https://drive.google.com/drive/u/0/folders/0B5l8lO-CaKt9VGh0a09vUjNFNjA"><?php _e( 'Documentation', 'xcellorate' ); ?></a>
+							<a target="_blank" href="<?php echo esc_url( 'https://drive.google.com/drive/u/0/folders/0B5l8lO-CaKt9VGh0a09vUjNFNjA' ); ?>"><?php _e( 'Documentation', 'xcellorate' ); ?></a>
 							<br>
-							<a target="_blank" href="https://www.youtube.com/user/xcellorate"><?php _e( 'Video Instructions', 'xcellorate' ); ?></a>
+							<a target="_blank" href="<?php echo esc_url( 'https://www.youtube.com/user/xcellorate' ); ?>"><?php _e( 'Video Instructions', 'xcellorate' ); ?></a>
 							<br>
-							<a target="_blank" href="https://support.cybexsecurity.co.uk"><?php _e( 'Knowledge Base', 'xcellorate' ); ?></a>
+							<a target="_blank" href="<?php echo esc_url( 'https://support.cybexsecurity.co.uk' ); ?>"><?php _e( 'Knowledge Base', 'xcellorate' ); ?></a>
 						</p>
 						<p>
 							<strong><?php _e( 'Licenses & Domains', 'xcellorate' ); ?></strong>
 							<br>
-							<?php printf( 'Manage your license(-s) and change domain names using the %s at CybexSecurity.',
-							'<a target="_blank" href="https://cybexsecurity.co.uk/client-area">' . __( 'Client Area', 'xcellorate' ) . '</a>' ); ?>
+							<?php printf( __( 'Manage your license(-s) and change domain names using the <a target="_blank" href="%s">Client Area</a> at CybexSecurity.', 'xcellorate' ), esc_url( 'https://cybexsecurity.co.uk/client-area' ) ); ?>
 						</p>
 						<p><a href="<?php echo esc_url( self_admin_url( $current_page ) ); ?>" target="_parent"><?php _e( 'Return to CybexSecurity Panel', 'xcellorate' ); ?></a></p>
+
 					<?php } else {
-						$category_href = $current_page;
-						if ( 'all' != $plugin_category )
-							$category_href .= '&category=' . $plugin_category; ?>
-                        <ul class="subsubsub">
-                            <li>
-                                <a <?php if ( ! isset( $_GET['sub'] ) ) echo 'class="current" '; ?>href="<?php echo esc_url( self_admin_url( $category_href ) ); ?>"><?php _e( 'All', 'xcellorate' ); ?></a>
-                            </li> |
-                            <li>
-                                <a <?php if ( isset( $_GET['sub'] ) && 'installed' == $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo esc_url( self_admin_url( $category_href . '&sub=installed' ) ); ?>"><?php _e( 'Installed', 'xcellorate' ); ?></a>
-                            </li> |
-                            <li>
-                                <a <?php if ( isset( $_GET['sub'] ) && 'not_installed' == $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo esc_url( self_admin_url( $category_href . '&sub=not_installed' ) ); ?>"><?php _e( 'Not Installed', 'xcellorate' ); ?></a>
-                            </li>
-                        </ul>
+						$category_href = esc_url( $current_page );
+						if ( 'all' !== $plugin_category ) {
+							$category_href .= '&category=' . esc_attr( $plugin_category );
+						}
+						?>
+						<ul class="subsubsub">
+							<li>
+								<a <?php if ( ! isset( $_GET['sub'] ) ) echo 'class="current" '; ?>href="<?php echo $category_href; ?>"><?php esc_html_e( 'All', 'xcellorate' ); ?></a>
+							</li> |
+							<li>
+								<a <?php if ( isset( $_GET['sub'] ) && 'installed' === $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo $category_href . '&sub=installed'; ?>"><?php esc_html_e( 'Installed', 'xcellorate' ); ?></a>
+							</li> |
+							<li>
+								<a <?php if ( isset( $_GET['sub'] ) && 'not_installed' === $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo $category_href . '&sub=not_installed'; ?>"><?php esc_html_e( 'Not Installed', 'xcellorate' ); ?></a>
+							</li>
+						</ul>
                         <div class="clear"></div>
-                        <div class="cbx-filter-top">
-                            <h2>
-                                <span class="cbx-toggle-indicator"></span>
-								<?php _e( 'Filter results', 'xcellorate' ); ?>
-                            </h2>
-                            <div class="cbx-filter-top-inside">
-                                <div class="cbx-filter-title"><?php _e( 'Category', 'xcellorate' ); ?></div>
-                                <ul class="cbx-category">
-                                    <li>
-										<?php $sub_in_url = ( isset( $_GET['sub'] ) && in_array( $_GET['sub'], array( 'installed', 'not_installed' ) ) ) ? '&sub=' . $_GET['sub'] : ''; ?>
-                                        <a <?php if ( 'all' == $plugin_category ) echo ' class="cbx-active"'; ?> href="<?php echo esc_url(self_admin_url( $current_page . $sub_in_url ) ); ?>"><?php _e( 'All', 'xcellorate' ); ?>
-                                            <span>(<?php echo count( $cbx_plugins ); ?>)</span>
-                                        </a>
-                                    </li>
-									<?php foreach ( $cbx_plugins_category as $category_key => $category_value ) { ?>
-                                        <li>
-                                            <a <?php if ( $category_key == $plugin_category ) echo ' class="cbx-active"'; ?> href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url . '&category=' . $category_key ) ); ?>"><?php echo $category_value['name']; ?>
-                                                <span>(<?php echo $category_value['count']; ?>)</span>
-                                            </a>
-                                        </li>
+						<div class="cbx-filter-top">
+							<h2>
+								<span class="cbx-toggle-indicator"></span>
+								<?php esc_html_e( 'Filter results', 'xcellorate' ); ?>
+							</h2>
+							<div class="cbx-filter-top-inside">
+								<div class="cbx-filter-title"><?php esc_html_e( 'Category', 'xcellorate' ); ?></div>
+								<ul class="cbx-category">
+									<li>
+										<?php
+										$sub_in_url = ( isset( $_GET['sub'] ) && in_array( $_GET['sub'], array( 'installed', 'not_installed' ) ) ) ? '&sub=' . esc_attr( $_GET['sub'] ) : '';
+										$all_plugins_count = count( $cbx_plugins );
+										$is_all_active = ( 'all' === $plugin_category ) ? ' cbx-active' : '';
+										?>
+										<a class="<?php echo esc_attr( $is_all_active ); ?>" href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url ) ); ?>">
+											<?php esc_html_e( 'All', 'xcellorate' ); ?>
+											<span>(<?php echo esc_html( $all_plugins_count ); ?>)</span>
+										</a>
+									</li>
+									<?php
+									foreach ( $cbx_plugins_category as $category_key => $category_value ) {
+										$is_category_active = ( $category_key === $plugin_category ) ? ' cbx-active' : '';
+										?>
+										<li>
+											<a class="<?php echo esc_attr( $is_category_active ); ?>" href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url . '&category=' . $category_key ) ); ?>">
+												<?php echo esc_html( $category_value['name'] ); ?>
+												<span>(<?php echo esc_html( $category_value['count'] ); ?>)</span>
+											</a>
+										</li>
 									<?php } ?>
-                                </ul>
-                            </div>
-                        </div>
+								</ul>
+							</div>
+						</div>
                         <div class="cbx-products">
 							<?php $nothing_found = true;
 							foreach ( $cbx_plugins as $key_plugin => $value_plugin ) {
@@ -420,23 +431,23 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 
 								$nothing_found = false; ?>
                                 <div class="cbx_product_box<?php if ( $is_active || $is_pro_active ) echo ' cbx_product_active'; ?>">
-                                    <div class="cbx_product_image">
-                                        <a <?php echo $link_attr; ?>><img src="<?php echo $icon; ?>"/></a>
-                                    </div>
-                                    <div class="cbx_product_content">
-                                        <div class="cbx_product_title"><a <?php echo $link_attr; ?>><?php echo $value_plugin['name']; ?></a></div>
-                                        <div class="cbx-version">
+									<div class="cbx_product_image">
+										<a <?php echo $link_attr; ?>><img src="<?php echo esc_url( $icon ); ?>" /></a>
+									</div>
+									<div class="cbx_product_content">
+										<div class="cbx_product_title"><a <?php echo $link_attr; ?>><?php echo esc_html( $value_plugin['name'] ); ?></a></div>
+										<div class="cbx-version">
 											<?php
 											if ( $is_pro_installed ) {
 												echo '<span';
 												if ( ! empty( $value_plugin['expired'] ) || ! empty( $value_plugin['update_availible'] ) )
 													echo ' class="cbx-update-available"';
-												echo '>v ' . $all_plugins[ $value_plugin['pro_version'] ]['Version'] . '</span>';
+												echo '>v ' . esc_html( $all_plugins[ $value_plugin['pro_version'] ]['Version'] ) . '</span>';
 											} elseif ( $is_installed ) {
 												echo '<span';
 												if ( ! empty( $value_plugin['expired'] ) || ! empty( $value_plugin['update_availible'] ) )
 													echo ' class="cbx-update-available"';
-												echo '>v ' . $all_plugins[ $key_plugin ]['Version'] . '</span>';
+												echo '>v ' . esc_html( $all_plugins[ $key_plugin ]['Version'] ) . '</span>';
 											} else {
 												echo '<span>' . __( 'Not installed', 'xcellorate' ) . '</span>';
 											}
@@ -447,154 +458,169 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 												$r = $update_availible_all->response[ $value_plugin['update_availible'] ];
 												echo ' - <a class="cbx-update-now" href="' . esc_url( wp_nonce_url( self_admin_url( 'update.php?action=upgrade-plugin&plugin=' . $value_plugin['update_availible'] ), 'upgrade-plugin_' . $value_plugin['update_availible'] ) ) . '" class="update-link" aria-label="' . sprintf( __( 'Update to v %s', 'xcellorate' ), $r->new_version ) . '">' . sprintf( __( 'Update to v %s', 'xcellorate' ), $r->new_version ) . '</a>';
 											} ?>
-                                        </div>
-                                        <div class="cbx_product_description">
+										</div>
+										<div class="cbx_product_description">
 											<?php echo ( strlen( $value_plugin['description'] ) > 100 ) ? mb_substr( $value_plugin['description'], 0, 100 ) . '...' : $value_plugin['description']; ?>
-                                        </div>
-                                        <div class="cbx_product_links">
+										</div>
+										<div class="cbx_product_links">
 											<?php if ( $is_active || $is_pro_active ) {
 												if ( $is_pro_isset ) {
 													if ( ! $is_pro_installed ) {
 														if ( ! empty( $plugins_array ) && array_key_exists( $value_plugin['pro_version'], $plugins_array ) ) { ?>
-                                                            <form method="post" action="">
-                                                                <input type="submit" class="button button-secondary" value="<?php _e( 'Get Pro', 'xcellorate' ); ?>" />
-                                                                <input type="hidden" name="cbx_plugin_action_submit" value="submit" />
-                                                                <input type="hidden" name="cbx_install_plugin" value="<?php echo $value_plugin['pro_version']; ?>" />
+															<form method="post" action="">
+																<input type="submit" class="button button-secondary" value="<?php _e( 'Get Pro', 'xcellorate' ); ?>" />
+																<input type="hidden" name="cbx_plugin_action_submit" value="submit" />
+																<input type="hidden" name="cbx_install_plugin" value="<?php echo $value_plugin['pro_version']; ?>" />
 																<?php wp_nonce_field( plugin_basename(__FILE__), 'cbx_license_install_nonce_name' ); ?>
-                                                            </form>
+															</form>
 														<?php } else { ?>
-                                                            <a class="button button-secondary cbx_upgrade_button" href="<?php echo esc_url( $cbx_plugins[ $key_plugin ]['purchase'] ); ?>" target="_blank"><?php _e( 'Upgrade to Pro', 'xcellorate' ); ?></a>
+															<a class="button button-secondary cbx_upgrade_button" href="<?php echo esc_url( $cbx_plugins[ $key_plugin ]['purchase'] ); ?>" target="_blank"><?php _e( 'Upgrade to Pro', 'xcellorate' ); ?></a>
 														<?php }
 													}
 												} else { ?>
-                                                    <a class="cbx_donate" href="https://cybexsecurity.co.uk/donate/" target="_blank"><?php _e( 'Donate', 'xcellorate' ); ?></a> <span>|</span>
+													<a class="cbx_donate" href="https://cybexsecurity.co.uk/donate/" target="_blank"><?php _e( 'Donate', 'xcellorate' ); ?></a> <span>|</span>
 												<?php }
 
 												if ( $is_pro_active ) { ?>
-                                                    <a class="cbx_settings" href="<?php echo esc_url( self_admin_url( $cbx_plugins[ $key_plugin ]["pro_settings"] ) ); ?>"><?php _e( 'Settings', 'xcellorate' ); ?></a>
+													<a class="cbx_settings" href="<?php echo esc_url( self_admin_url( $cbx_plugins[ $key_plugin ]["pro_settings"] ) ); ?>"><?php _e( 'Settings', 'xcellorate' ); ?></a>
 												<?php } else { ?>
-                                                    <a class="cbx_settings" href="<?php echo esc_url( self_admin_url( $cbx_plugins[ $key_plugin ]["settings"] ) ); ?>"><?php _e( 'Settings', 'xcellorate' ); ?></a>
+													<a class="cbx_settings" href="<?php echo esc_url( self_admin_url( $cbx_plugins[ $key_plugin ]["settings"] ) ); ?>"><?php _e( 'Settings', 'xcellorate' ); ?></a>
 												<?php }
 											} else {
 												if ( $is_pro_installed ) { ?>
-                                                    <a class="button button-secondary" href="<?php echo esc_url( wp_nonce_url( self_admin_url( $current_page . '&cbx_activate_plugin=' . $value_plugin['pro_version'] ), 'cbx_activate_plugin' . $value_plugin['pro_version'] ) ); ?>" title="<?php _e( 'Activate this plugin', 'xcellorate' ); ?>"><?php _e( 'Activate', 'xcellorate' ); ?></a>
+													<a class="button button-secondary" href="<?php echo esc_url( wp_nonce_url( self_admin_url( $current_page . '&cbx_activate_plugin=' . $value_plugin['pro_version'] ), 'cbx_activate_plugin' . $value_plugin['pro_version'] ) ); ?>" title="<?php _e( 'Activate this plugin', 'xcellorate' ); ?>"><?php _e( 'Activate', 'xcellorate' ); ?></a>
 												<?php } elseif ( ! empty( $plugins_array ) && isset( $value_plugin['pro_version'] ) && array_key_exists( $value_plugin['pro_version'], $plugins_array ) ) { ?>
-                                                    <form method="post" action="">
-                                                        <input type="submit" class="button button-secondary" value="<?php _e( 'Get Pro', 'xcellorate' ); ?>" />
-                                                        <input type="hidden" name="cbx_plugin_action_submit" value="submit" />
-                                                        <input type="hidden" name="cbx_install_plugin" value="<?php echo $value_plugin['pro_version']; ?>" />
+													<form method="post" action="">
+														<input type="submit" class="button button-secondary" value="<?php _e( 'Get Pro', 'xcellorate' ); ?>" />
+														<input type="hidden" name="cbx_plugin_action_submit" value="submit" />
+														<input type="hidden" name="cbx_install_plugin" value="<?php echo $value_plugin['pro_version']; ?>" />
 														<?php wp_nonce_field( plugin_basename(__FILE__), 'cbx_license_install_nonce_name' ); ?>
-                                                    </form>
+													</form>
 												<?php } elseif ( $is_installed ) { ?>
-                                                    <a class="button button-secondary" href="<?php echo esc_url( wp_nonce_url( self_admin_url( $current_page . '&cbx_activate_plugin=' . $key_plugin ), 'cbx_activate_plugin' . $key_plugin ) ); ?>" title="<?php _e( 'Activate this plugin', 'xcellorate' ); ?>"><?php _e( 'Activate', 'xcellorate' ); ?></a>
+													<a class="button button-secondary" href="<?php echo esc_url( wp_nonce_url( self_admin_url( $current_page . '&cbx_activate_plugin=' . $key_plugin ), 'cbx_activate_plugin' . $key_plugin ) ); ?>" title="<?php _e( 'Activate this plugin', 'xcellorate' ); ?>"><?php _e( 'Activate', 'xcellorate' ); ?></a>
 												<?php } else {
 													$install_url = isset( $value_plugin['install_url'] ) ? $value_plugin['install_url'] : network_admin_url( 'plugin-install.php?tab=search&type=term&s=' . str_replace( array( ' ', '-' ), '+', str_replace( '&', '', $value_plugin['name'] ) ) . '+CybexSecurity&plugin-search-input=Search+Plugins' ); ?>
-                                                    <a class="button button-secondary" href="<?php echo esc_url( $install_url ); ?>" title="<?php _e( 'Install this plugin', 'xcellorate' ); ?>" target="_blank"><?php _e( 'Install Now', 'xcellorate' ); ?></a>
+													<a class="button button-secondary" href="<?php echo esc_url( $install_url ); ?>" title="<?php _e( 'Install this plugin', 'xcellorate' ); ?>" target="_blank"><?php _e( 'Install Now', 'xcellorate' ); ?></a>
 												<?php }
 											} ?>
-                                        </div>
-                                    </div>
-                                    <div class="clear"></div>
-                                </div>
+										</div>
+									</div>
+									<div class="clear"></div>
+								</div>
 							<?php }
 							if ( $nothing_found ) { ?>
-                                <p class="description"><?php _e( 'Nothing found. Try another criteria.', 'xcellorate' ); ?></p>
+								<p class="description"><?php esc_html_e( 'Nothing found. Try another criteria.', 'xcellorate' ); ?></p>
 							<?php } ?>
                         </div>
-                        <div id="cbx-filter-wrapper">
-                            <div class="cbx-filter">
-                                <div class="cbx-filter-title"><?php _e( 'Category', 'xcellorate' ); ?></div>
-                                <ul class="cbx-category">
-                                    <li>
-										<?php $sub_in_url = ( isset( $_GET['sub'] ) && in_array( $_GET['sub'], array( 'installed', 'not_installed' ) ) ) ? '&sub=' . $_GET['sub'] : ''; ?>
-                                        <a <?php if ( 'all' == $plugin_category ) echo ' class="cbx-active"'; ?> href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url ) ); ?>"><?php _e( 'All', 'xcellorate' ); ?>
-                                            <span>(<?php echo count( $cbx_plugins ); ?>)</span>
-                                        </a>
-                                    </li>
+						<div id="cbx-filter-wrapper">
+							<div class="cbx-filter">
+								<div class="cbx-filter-title"><?php esc_html_e( 'Category', 'xcellorate' ); ?></div>
+								<ul class="cbx-category">
+									<li>
+										<?php
+										$sub_in_url = ( isset( $_GET['sub'] ) && in_array( $_GET['sub'], array( 'installed', 'not_installed' ) ) ) ? '&sub=' . $_GET['sub'] : '';
+										$all_plugins_count = count( $cbx_plugins );
+										?>
+										<a <?php if ( 'all' == $plugin_category ) echo 'class="cbx-active"'; ?> href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url ) ); ?>">
+											<?php esc_html_e( 'All', 'xcellorate' ); ?>
+											<span>(<?php echo esc_html( $all_plugins_count ); ?>)</span>
+										</a>
+									</li>
 									<?php foreach ( $cbx_plugins_category as $category_key => $category_value ) { ?>
-                                        <li>
-                                            <a <?php if ( $category_key == $plugin_category ) echo ' class="cbx-active"'; ?> href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url . '&category=' . $category_key ) ); ?>"><?php echo $category_value['name']; ?>
-                                                <span>(<?php echo $category_value['count']; ?>)</span>
-                                            </a>
-                                        </li>
+										<li>
+											<?php
+											$category_count = $category_value['count'];
+											$category_name = $category_value['name'];
+											?>
+											<a <?php if ( $category_key == $plugin_category ) echo 'class="cbx-active"'; ?> href="<?php echo esc_url( self_admin_url( $current_page . $sub_in_url . '&category=' . $category_key ) ); ?>">
+												<?php echo esc_html( $category_name ); ?>
+												<span>(<?php echo esc_html( $category_count ); ?>)</span>
+											</a>
+										</li>
 									<?php } ?>
-                                </ul>
-                            </div>
-                        </div><!-- #cbx-filter-wrapper -->
-                        <div class="clear"></div>
+								</ul>
+							</div>
+						</div><!-- #cbx-filter-wrapper -->
+						<div class="clear"></div>
 					<?php }
 				} elseif ( 'cbx_themes' == $page || 'themes' == $tab ) {
 					?>
-                    <h1><?php _e( 'Themes', 'xcellorate' ); ?></h1>
-                    <div id="availablethemes" class="cbx-availablethemes">
-                        <div class="theme-browser content-filterable rendered">
-                            <div class="themes wp-clearfix">
+					<h1><?php esc_html_e( 'Themes', 'xcellorate' ); ?></h1>
+					<div id="availablethemes" class="cbx-availablethemes">
+						<div class="theme-browser content-filterable rendered">
+							<div class="themes wp-clearfix">
 								<?php foreach ( $themes as $key => $theme ) {
 									$installed_theme = wp_get_theme( $theme->slug ); ?>
-                                    <div class="theme" tabindex="0">
-                                        <div class="theme-screenshot">
-                                            <img src="<?php echo cbx_menu_url( "icons/themes/" ) . $theme->slug . '.png'; ?>" alt="" />
-                                        </div>
-                                        <div class="theme-author"><?php printf( __( 'By %s', 'xcellorate' ), 'CybexSecurity' ); ?></div>
-                                        <h3 class="theme-name"><?php echo $theme->name; ?></h3>
-                                        <div class="theme-actions">
-                                            <a class="button button-secondary preview install-theme-preview" href="<?php echo esc_url( $theme->href ); ?>" target="_blank"><?php _e( 'Learn More', 'xcellorate' ); ?></a>
-                                        </div>
+									<div class="theme" tabindex="0">
+										<div class="theme-screenshot">
+											<img src="<?php echo esc_url( cbx_menu_url( 'icons/themes/' ) . $theme->slug . '.png' ); ?>" alt="" />
+										</div>
+										<div class="theme-author"><?php printf( __( 'By %s', 'xcellorate' ), 'CybexSecurity' ); ?></div>
+										<h3 class="theme-name"><?php echo esc_html( $theme->name ); ?></h3>
+										<div class="theme-actions">
+											<a class="button button-secondary preview install-theme-preview" href="<?php echo esc_url( $theme->href ); ?>" target="_blank"><?php _e( 'Learn More', 'xcellorate' ); ?></a>
+										</div>
 										<?php if ( $installed_theme->exists() ) {
-											if ( $wp_version < '4.6' ) { ?>
-                                                <div class="theme-installed"><?php _e( 'Already Installed', 'xcellorate' ); ?></div>
+											if ( version_compare( $wp_version, '4.6', '<' ) ) { ?>
+												<div class="theme-installed"><?php _e( 'Already Installed', 'xcellorate' ); ?></div>
 											<?php } else { ?>
-                                                <div class="notice notice-success notice-alt inline"><p><?php _e( 'Installed', 'xcellorate' ); ?></p></div>
+												<div class="notice notice-success notice-alt inline"><p><?php _e( 'Installed', 'xcellorate' ); ?></p></div>
 											<?php }
 										} ?>
-                                    </div>
+									</div>
 								<?php } ?>
-                                <br class="clear" />
-                            </div>
-                        </div>
-                        <p><a class="cbx_browse_link" href="https://cybexsecurity.co.uk/products/wordpress/themes/" target="_blank"><?php _e( 'Browse More WordPress Themes', 'xcellorate' ); ?> <span class="dashicons dashicons-arrow-right-alt2"></span></a></p>
-                    </div>
+								<br class="clear" />
+							</div>
+						</div>
+						<p>
+							<a class="cbx_browse_link" href="https://cybexsecurity.co.uk/products/wordpress/themes/" target="_blank"><?php _e( 'Browse More WordPress Themes', 'xcellorate' ); ?> <span class="dashicons dashicons-arrow-right-alt2"></span></a>
+						</p>
+					</div>
 				<?php } elseif ( 'cbx_system_status' == $page || 'system-status' == $tab ) { ?>
-                    <h1><?php _e( 'System status', 'xcellorate' ); ?></h1>
-                    <div class="updated fade notice is-dismissible inline" <?php if ( ! ( isset( $_REQUEST['cbxmn_form_submit'] ) || isset( $_REQUEST['cbxmn_form_submit_custom_email'] ) ) || $error != "" ) echo 'style="display:none"'; ?>><p><strong><?php echo $message; ?></strong></p></div>
-                    <div class="error" <?php if ( "" == $error ) echo 'style="display:none"'; ?>><p><strong><?php echo $error; ?></strong></p></div>
-                    <form method="post" action="">
-                        <p>
-                            <input type="hidden" name="cbxmn_form_submit" value="submit" />
-                            <input type="submit" class="button-primary" value="<?php _e( 'Send to support', 'xcellorate' ) ?>" />
-							<?php wp_nonce_field( plugin_basename(__FILE__), 'cbxmn_nonce_submit' ); ?>
-                        </p>
-                    </form>
-                    <form method="post" action="">
-                        <p>
-                            <input type="hidden" name="cbxmn_form_submit_custom_email" value="submit" />
-                            <input type="submit" class="button" value="<?php _e( 'Send to custom email &#187;', 'xcellorate' ) ?>" />
-                            <input type="text" maxlength="250" value="" name="cbxmn_form_email" />
-							<?php wp_nonce_field( plugin_basename(__FILE__), 'cbxmn_nonce_submit_custom_email' ); ?>
-                        </p>
-                    </form>
+                    <h1><?php esc_html_e( 'System status', 'xcellorate' ); ?></h1>
+					<div class="updated fade notice is-dismissible inline"<?php if ( ! ( isset( $_REQUEST['cbxmn_form_submit'] ) || isset( $_REQUEST['cbxmn_form_submit_custom_email'] ) ) || $error !== '' ) echo ' style="display:none;"'; ?>>
+						<p><strong><?php echo esc_html( $message ); ?></strong></p>
+					</div>
+					<div class="error"<?php if ( $error === '' ) echo ' style="display:none;"'; ?>>
+						<p><strong><?php echo esc_html( $error ); ?></strong></p>
+					</div>
+					<form method="post" action="">
+						<p>
+							<input type="hidden" name="cbxmn_form_submit" value="submit" />
+							<input type="submit" class="button-primary" value="<?php esc_attr_e( 'Send to support', 'xcellorate' ); ?>" />
+							<?php wp_nonce_field( plugin_basename( __FILE__ ), 'cbxmn_nonce_submit' ); ?>
+						</p>
+					</form>
+					<form method="post" action="">
+						<p>
+							<input type="hidden" name="cbxmn_form_submit_custom_email" value="submit" />
+							<input type="submit" class="button" value="<?php esc_attr_e( 'Send to custom email &#187;', 'xcellorate' ); ?>" />
+							<input type="text" maxlength="250" value="" name="cbxmn_form_email" />
+							<?php wp_nonce_field( plugin_basename( __FILE__ ), 'cbxmn_nonce_submit_custom_email' ); ?>
+						</p>
+					</form>
 					<?php foreach ( $system_info as $info ) { ?>
-                        <table class="widefat cbx-system-info" cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th colspan="2">
-                                    <strong>
-										<?php echo $info['name'];
+						<table class="widefat cbx-system-info" cellspacing="0">
+							<thead>
+							<tr>
+								<th colspan="2">
+									<strong>
+										<?php echo esc_html( $info['name'] );
 										if ( isset( $info['count'] ) )
-											echo ' (' . $info['count'] . ')'; ?>
-                                    </strong>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
+											echo ' (' . esc_html( $info['count'] ) . ')'; ?>
+									</strong>
+								</th>
+							</tr>
+							</thead>
+							<tbody>
 							<?php foreach ( $info['data'] as $key => $value ) { ?>
-                                <tr>
-                                    <td scope="row"><?php echo $key; ?></td>
-                                    <td scope="row"><?php echo $value; ?></td>
-                                </tr>
+								<tr>
+									<td scope="col"><?php echo esc_html( $key ); ?></td>
+									<td scope="row"><?php echo esc_html( $value ); ?></td>
+								</tr>
 							<?php } ?>
-                            </tbody>
-                        </table>
+							</tbody>
+						</table>
 					<?php }
 				} ?>
             </div>

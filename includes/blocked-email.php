@@ -197,7 +197,7 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List_Email' ) ) {
 
 				if ( false !== $result_reset_block && false !== $result_reset_block_stat ) {
 					/* if operation with DB was succesful */
-					$action_message['done'] = $message_list['block_reset_done'] . '&nbsp;' . esc_html( $_REQUEST['tab-action'] );
+					$action_message['done'] = $message_list['block_reset_done'] . '&nbsp;' . esc_html( isset( $_REQUEST['tab-action'] ) ? $_REQUEST['tab-action'] : '' );
 
 					if ( $cbxsec_options['block_by_htaccess'] ) {
 						do_action( 'cbxsec_htaccess_hook_for_reset_block', $_REQUEST['tab-action'] ); /* hook for deblocking by Htaccess */

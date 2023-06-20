@@ -211,7 +211,7 @@ if ( ! class_exists( 'Cbxlogin_Statistics' ) ) {
 				/* Clear some entries */
 				if ( isset( $_POST['id'] ) ) {
 					/* if statistics entries exist */
-					$ids = $_POST['id'];
+					$ids = isset( $_POST['id'] ) ? sanitize_text_field( $_POST['id'] ) : '';
 					$error = $done = 0;
 					foreach ( $ids as $id ) {
 						if ( false === cbxsec_clear_statistics( $id ) ) {
@@ -232,7 +232,7 @@ if ( ! class_exists( 'Cbxlogin_Statistics' ) ) {
 			}
 
 			if ( isset( $_REQUEST['s'] ) ) {
-				$search_request = esc_html( trim( $_REQUEST['s'] ) );
+				$search_request = isset( $_REQUEST['s'] ) ? sanitize_text_field( $_REQUEST['s'] ) : '';
 				if ( ! empty( $search_request ) ) {
 					if ( preg_match( '/^(25[0-5]|2[0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[0-9])?(\.?(25[0-5]|2[0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[-0-9])?){0,3}?$/', $search_request ) )
 						$action_message['done'] .= ( empty( $action_message['done'] ) ? '' : '<br/>' ) . __( 'Search results for', 'cybex-security' ) . '&nbsp;' . $search_request;

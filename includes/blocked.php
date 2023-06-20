@@ -31,8 +31,8 @@ if ( ! class_exists( 'Cbxlogin_Blocked_List' ) ) {
 		function column_ip( $item ) {
 			/* adding action to 'ip' collumn */
 			$actions = array(
-				'reset_block'	=> '<a href="' . wp_nonce_url( sprintf( '?page=%s&cbxsec_reset_block=%s', $_REQUEST['page'], $item['ip'] ), 'cbxsec_reset_block_' . $item['ip'], 'cbxsec_nonce_name' ) . '">' . __( 'Reset Block', 'cybex-security' ) . '</a>',
-				'add_to_allowlist'	=> '<a href="' . wp_nonce_url( sprintf( '?page=%s&cbxsec_add_to_allowlist=%s', $_REQUEST['page'], $item['ip'] ) , 'cbxsec_add_to_allowlist_' . $item['ip'], 'cbxsec_nonce_name' ) . '">' . __( 'Add to Allow list', 'cybex-security' ) . '</a>'
+				'reset_block' => '<a href="' . wp_nonce_url( sprintf( '?page=%s&cbxsec_reset_block=%s', esc_url( $_REQUEST['page'] ), $item['ip'] ), 'cbxsec_reset_block_' . $item['ip'], 'cbxsec_nonce_name' ) . '">' . __( 'Reset Block', 'cybex-security' ) . '</a>',
+				'add_to_allowlist' => '<a href="' . wp_nonce_url( sprintf( '?page=%s&cbxsec_add_to_allowlist=%s', esc_url( $_REQUEST['page'] ), $item['ip'] ), 'cbxsec_add_to_allowlist_' . $item['ip'], 'cbxsec_nonce_name' ) . '">' . __( 'Add to Allow list', 'cybex-security' ) . '</a>'
 			);
 			return sprintf( '%1$s %2$s', $item['ip'], $this->row_actions( $actions ) );
 		}

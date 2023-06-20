@@ -555,7 +555,7 @@ function ajax_verify_callback() {
 	
 	// Create new secret.
 	$GA_secret = trim( sanitize_text_field( $_POST['secret'] ) );
-	$otp = trim($_POST['otp']);
+	$otp = isset( $_POST['otp'] ) ? sanitize_text_field( $_POST['otp'] ) : '';
 	$GA_relaxedmode = trim( get_user_option( 'googleauthenticator_relaxedmode', $user->ID ) );
 	$lasttimeslot = trim( get_user_option( 'googleauthenticator_lasttimeslot', $user->ID ) );
 
