@@ -75,12 +75,12 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 					}
 			
 					/* Check for expiration */
-					if ( $is_pro_installed && isset( $bstwbsftwppdtplgns_options['time_out'][ $value_plugin['pro_version'] ] ) &&
-						strtotime( $bstwbsftwppdtplgns_options['time_out'][ $value_plugin['pro_version'] ] ) < strtotime( date( "m/d/Y" ) ) ) {
-						unset( $cbx_plugins[ $key_plugin ] );
-						$value_plugin['expired'] = $bstwbsftwppdtplgns_options['time_out'][ $value_plugin['pro_version'] ];
-						$cbx_plugins_expired[ $key_plugin ] = $value_plugin;
-					}
+					// if ( $is_pro_installed && isset( $bstwbsftwppdtplgns_options['time_out'][ $value_plugin['pro_version'] ] ) &&
+					// 	strtotime( $bstwbsftwppdtplgns_options['time_out'][ $value_plugin['pro_version'] ] ) < strtotime( date( "m/d/Y" ) ) ) {
+					// 	unset( $cbx_plugins[ $key_plugin ] );
+					// 	$value_plugin['expired'] = $bstwbsftwppdtplgns_options['time_out'][ $value_plugin['pro_version'] ];
+					// 	$cbx_plugins_expired[ $key_plugin ] = $value_plugin;
+					// }
 				}
 			
 				$cbx_plugins = $cbx_plugins_update_available + $cbx_plugins_expired + $cbx_plugins;
@@ -93,17 +93,17 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 			}
 
 			/*** membership ***/
-			$cbx_license_plugin = 'cbx_get_list_for_membership';
-			$cbx_license_key = isset( $bstwbsftwppdtplgns_options[ $cbx_license_plugin ] ) ? $bstwbsftwppdtplgns_options[ $cbx_license_plugin ] : '';
-			$update_membership_list = true;
+			// $cbx_license_plugin = 'cbx_get_list_for_membership';
+			// $cbx_license_key = isset( $bstwbsftwppdtplgns_options[ $cbx_license_plugin ] ) ? $bstwbsftwppdtplgns_options[ $cbx_license_plugin ] : '';
+			// $update_membership_list = true;
 
-			if ( isset( $_POST['cbx_license_key'] ) )
-				$cbx_license_key = sanitize_text_field( $_POST['cbx_license_key'] );
+			// if ( isset( $_POST['cbx_license_key'] ) )
+			// 	$cbx_license_key = sanitize_text_field( $_POST['cbx_license_key'] );
 
-			if ( isset( $_SESSION['cbx_membership_time_check'] ) && isset( $_SESSION['cbx_membership_list'] ) && $_SESSION['cbx_membership_time_check'] < strtotime( '+12 hours' ) ) {
-				$update_membership_list = false;
-				$plugins_array = isset( $_SESSION['cbx_membership_list'] ) ? (array) $_SESSION['cbx_membership_list'] : array();
-			}
+			// if ( isset( $_SESSION['cbx_membership_time_check'] ) && isset( $_SESSION['cbx_membership_list'] ) && $_SESSION['cbx_membership_time_check'] < strtotime( '+12 hours' ) ) {
+			// 	$update_membership_list = false;
+			// 	$plugins_array = isset( $_SESSION['cbx_membership_list'] ) ? (array) $_SESSION['cbx_membership_list'] : array();
+			// }
 		} elseif ( 'cbx_system_status' == $page || 'system-status' == $tab ) {
 
 			$all_plugins = get_plugins();
