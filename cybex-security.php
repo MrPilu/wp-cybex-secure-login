@@ -11,10 +11,10 @@ Author URI: https://cybexsecurity.co.uk/
 License: GPLv3 or later
 */
 
-/*  © Copyright 2021  CybexSecurity  ( https://support.cybexsecurity.co.uk )
+/*  © Copyright 2023  CybexSecurity  ( https://support.cybexsecurity.co.uk )
 
 	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License, version 2, as
+	it under the terms of the GNU General Public License version, as
 	published by the Free Software Foundation.
 
 	This program is distributed in the hope that it will be useful,
@@ -374,10 +374,12 @@ if ( ! function_exists( 'register_cbxsec_settings' ) ) {
             cbxsec_create_table();
 
 			/* crop table 'all_failed_attempts' */
-			$column_exists = $wpdb->query( "SHOW COLUMNS FROM `" . $prefix . "all_failed_attempts` LIKE 'invalid_captcha_from_login_form';" );
-			/* drop columns */
-			if ( ! empty( $column_exists ) )
-				$wpdb->query( "ALTER TABLE `{$prefix}all_failed_attempts`
+			// $column_exists = $wpdb->query( "SHOW COLUMNS FROM `" . $prefix . "all_failed_attempts` LIKE 'invalid_captcha_from_login_form';" );
+			$column_exists = $wpdb->get_var( $wpdb->prepare( "SHOW COLUMNS FROM `%sall_failed_attempts` LIKE %s;", $prefix, 'invalid_captcha_from_login_form' ) );
+
+			if ( ! empty( $column_exists ) ) {
+				$wpdb->query( $wpdb->prepare(
+					"ALTER TABLE `%sall_failed_attempts`
 					DROP `invalid_captcha_from_login_form`,
 					DROP `invalid_captcha_from_registration_form`,
 					DROP `invalid_captcha_from_reset_password_form`,
@@ -387,32 +389,43 @@ if ( ! function_exists( 'register_cbxsec_settings' ) ) {
 					DROP `invalid_captcha_from_bp_registration_form`,
 					DROP `invalid_captcha_from_bp_comments_form`,
 					DROP `invalid_captcha_from_bp_create_group_form`,
-					DROP `invalid_captcha_from_contact_form_7`;" );
-
-			$column_exists = $wpdb->query( "SHOW COLUMNS FROM `{$prefix}failed_attempts` LIKE 'block_by'" );
-			if ( 0 == $column_exists ) {
-				$wpdb->query( "ALTER TABLE `{$prefix}failed_attempts` ADD `block_by` TEXT AFTER `block_till`;" );
+					DROP `invalid_captcha_from_contact_form_7`;", $prefix
+				) );
 			}
-
-			$column_exists = $wpdb->query( "SHOW COLUMNS FROM `{$prefix}failed_attempts` LIKE 'email'" );
+			
+			$column_exists = $wpdb->get_var( $wpdb->prepare(
+				"SHOW COLUMNS FROM `%sfailed_attempts` LIKE %s;", $prefix, 'block_by'
+			) );
+			
 			if ( 0 == $column_exists ) {
-				$wpdb->query( "ALTER TABLE `{$prefix}failed_attempts` ADD `email` TEXT AFTER `ip_int`;" );
+				$wpdb->query( $wpdb->prepare(
+					"ALTER TABLE `%sfailed_attempts` ADD `block_by` TEXT AFTER `block_till`;", $prefix
+				) );
 			}
-
+			
+			$column_exists = $wpdb->query( $wpdb->prepare(
+				"SHOW COLUMNS FROM `%sfailed_attempts` LIKE 'email'", $prefix
+			) );
+			if ( 0 == $column_exists ) {
+				$wpdb->query( $wpdb->prepare(
+					"ALTER TABLE `%sfailed_attempts` ADD `email` TEXT AFTER `ip_int`;", $prefix
+				) );
+			}
+			
 			$column_exists = $wpdb->query( "SHOW COLUMNS FROM `{$prefix}failed_attempts` LIKE 'last_failed_attempt'" );
 			if ( 0 == $column_exists ) {
 				$wpdb->query( "ALTER TABLE `{$prefix}failed_attempts` ADD `last_failed_attempt` TIMESTAMP AFTER `block_by`;" );
 			}
-
+			
 			$column_exists = $wpdb->query( "SHOW COLUMNS FROM `{$prefix}all_failed_attempts` LIKE 'email'" );
 			if ( 0 == $column_exists ) {
 				$wpdb->query( "ALTER TABLE `{$prefix}all_failed_attempts` ADD `email` TEXT AFTER `ip_int`;" );
 			}
-
+			
 			$column_exists = $wpdb->query( "SHOW COLUMNS FROM `{$prefix}all_failed_attempts` LIKE 'block'" );
 			if ( 0 == $column_exists ) {
 				$wpdb->query( "ALTER TABLE `{$prefix}all_failed_attempts` ADD `block` BOOL DEFAULT FALSE AFTER `failed_attempts`;" );
-			}
+			}			
 
 			/* update database to version 1.3 */
 			$tables = array( 'denylist', 'allowlist', 'failed_attempts', 'all_failed_attempts' );

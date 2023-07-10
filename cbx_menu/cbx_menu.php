@@ -295,7 +295,9 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 
             <div class="cbx-wrap-content wrap">
 				<?php if ( 'cbx_panel' == $page || ( ! isset( $_GET['tab'] ) && ! $is_main_page ) ) { ?>
-                    <div class="updated notice is-dismissible inline" <?php if ( '' == $message || '' != $error ) echo 'style="display:none"'; ?>><p><?php echo $message; ?></p></div>
+					<div class="updated notice is-dismissible inline" <?php if ( '' == $message || '' != $error ) echo 'style="display:none;"'; ?>>
+						<p><?php echo esc_html( $message ); ?></p>
+					</div>
                     <h1>
 						<?php _e( 'Plugins', 'xcellorate' ); ?>
                         <a href="<?php echo self_admin_url( 'plugin-install.php?tab=upload' ); ?>" class="upload page-title-action add-new-h2"><?php _e( 'Upload Plugin', 'xcellorate' ); ?></a>
@@ -360,13 +362,13 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 						?>
 						<ul class="subsubsub">
 							<li>
-								<a <?php if ( ! isset( $_GET['sub'] ) ) echo 'class="current" '; ?>href="<?php echo $category_href; ?>"><?php esc_html_e( 'All', 'xcellorate' ); ?></a>
+								<a <?php if ( ! isset( $_GET['sub'] ) ) echo 'class="current" '; ?>href="<?php echo esc_url( $category_href ); ?>"><?php esc_html_e( 'All', 'xcellorate' ); ?></a>
 							</li> |
 							<li>
-								<a <?php if ( isset( $_GET['sub'] ) && 'installed' === $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo $category_href . '&sub=installed'; ?>"><?php esc_html_e( 'Installed', 'xcellorate' ); ?></a>
+								<a <?php if ( isset( $_GET['sub'] ) && 'installed' === $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo esc_url( $category_href . '&sub=installed' ); ?>"><?php esc_html_e( 'Installed', 'xcellorate' ); ?></a>
 							</li> |
 							<li>
-								<a <?php if ( isset( $_GET['sub'] ) && 'not_installed' === $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo $category_href . '&sub=not_installed'; ?>"><?php esc_html_e( 'Not Installed', 'xcellorate' ); ?></a>
+								<a <?php if ( isset( $_GET['sub'] ) && 'not_installed' === $_GET['sub'] ) echo 'class="current" '; ?>href="<?php echo esc_url( $category_href . '&sub=not_installed' ); ?>"><?php esc_html_e( 'Not Installed', 'xcellorate' ); ?></a>
 							</li>
 						</ul>
                         <div class="clear"></div>
@@ -432,10 +434,10 @@ if ( ! function_exists( 'cbx_add_menu_render' ) ) {
 								$nothing_found = false; ?>
                                 <div class="cbx_product_box<?php if ( $is_active || $is_pro_active ) echo ' cbx_product_active'; ?>">
 									<div class="cbx_product_image">
-										<a <?php echo $link_attr; ?>><img src="<?php echo esc_url( $icon ); ?>" /></a>
+										<a <?php echo esc_attr( $link_attr ); ?>><img src="<?php echo esc_url( $icon ); ?>" /></a>
 									</div>
 									<div class="cbx_product_content">
-										<div class="cbx_product_title"><a <?php echo $link_attr; ?>><?php echo esc_html( $value_plugin['name'] ); ?></a></div>
+										<div class="cbx_product_title"><a <?php echo esc_attr( $link_attr ); ?>><?php echo esc_html( $value_plugin['name'] ); ?></a></div>
 										<div class="cbx-version">
 											<?php
 											if ( $is_pro_installed ) {

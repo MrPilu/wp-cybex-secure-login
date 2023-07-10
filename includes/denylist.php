@@ -71,12 +71,14 @@ if ( ! class_exists( 'Cbxlogin_Denylist' ) ) {
 				"total_items" 	=> $totalitems,
 				"per_page" 		=> $perpage
 			) );
+
 			/* the 'orderby' and 'order' values */
-			$orderby = isset( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], array_keys( $this->get_sortable_columns() ) ) ? $_REQUEST['orderby']  : 'add_time';
+			$orderby = isset( $_REQUEST['orderby'] ) && in_array( $_REQUEST['orderby'], array_keys( $this->get_sortable_columns() ) ) ? $_REQUEST['orderby'] : 'add_time';
 			$order   = ( isset( $_REQUEST['order'] ) && in_array( $_REQUEST['order'], array( 'asc', 'desc' ) ) ) ? $_REQUEST['order'] : 'desc';
 			/* calculate offset for pagination */
 			$paged   = ( isset( $_REQUEST['paged'] ) && is_numeric( $_REQUEST['paged'] ) && 0 < $_REQUEST['paged'] ) ? $_REQUEST['paged'] : 1;
 			$offset  = ( $paged - 1 ) * $perpage;
+
 
 			/* general query */
 			$query = "SELECT `ip`, `add_time` FROM `" . $prefix . "denylist`";
